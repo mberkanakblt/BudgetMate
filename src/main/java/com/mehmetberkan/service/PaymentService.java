@@ -37,6 +37,7 @@ public class PaymentService {
                 .amount(dto.amount())
                 .time(LocalDateTime.now().toString())
                 .status(PaymentStatus.PENDING)
+                .categoryId(dto.categoryId())
                 .build();
 
         paymentRepository.save(payment);

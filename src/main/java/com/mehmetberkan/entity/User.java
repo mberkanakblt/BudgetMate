@@ -27,9 +27,4 @@ public class User {
     String address;
     BigDecimal balance;
 
-    @OneToMany
-    List<Payment> sentPayments;
-
-    @OneToMany
-    List<Payment> receivedPayments;
 }

@@ -20,7 +20,6 @@ public class Category {
     Long id;
     String name;
     String description;
-
     @OneToMany
     List<Payment> payments;
 }

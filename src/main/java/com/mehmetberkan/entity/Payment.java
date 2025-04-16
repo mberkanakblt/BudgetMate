@@ -19,19 +19,14 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-
     @ManyToOne
     User sender;
-
     @ManyToOne
     User recipient;
-
     BigDecimal amount;
     String time;
-
     @Enumerated(EnumType.STRING)
     PaymentStatus status;
+    Long categoryId;
 
-    @ManyToOne
-    Category category;
 }
