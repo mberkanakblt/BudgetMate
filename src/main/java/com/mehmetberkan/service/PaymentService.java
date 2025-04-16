@@ -3,6 +3,8 @@ package com.mehmetberkan.service;
 import com.mehmetberkan.dto.request.PaymentRequestDto;
 import com.mehmetberkan.entity.Payment;
 import com.mehmetberkan.entity.User;
+import com.mehmetberkan.exception.BudgetMateException;
+import com.mehmetberkan.exception.ErrorType;
 import com.mehmetberkan.repository.PaymentRepository;
 import com.mehmetberkan.repository.UserRepository;
 import com.mehmetberkan.utility.PaymentStatus;
@@ -21,12 +23,13 @@ public class PaymentService {
 
     public void sendPayment(PaymentRequestDto dto) {
         User sender = userRepository.findById(dto.senderId())
-                .orElseThrow(() -> new RuntimeException("Sender not found"));
+                .orElseThrow(() -> new BudgetMateException(ErrorType.SENDER_NOT_FOUND));
+
         User recipient = userRepository.findById(dto.recipientId())
-                .orElseThrow(() -> new RuntimeException("Recipient not found"));
+                .orElseThrow(() -> new BudgetMateException(ErrorType.RECIPIENT_NOT_FOUND));
 
         if (sender.getBalance().compareTo(dto.amount()) < 0) {
-            throw new RuntimeException("Insufficient balance");
+            throw new BudgetMateException(ErrorType.INSUFFICIENT_BALANCE);
         }
         sender.setBalance(sender.getBalance().subtract(dto.amount()));
         recipient.setBalance(recipient.getBalance().add(dto.amount()));
